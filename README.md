@@ -1,133 +1,86 @@
-Here's a sample `README.md` file for your project:
+Apologies for the confusion! Here's the revised version of the README file, keeping the API endpoints section and just modifying how the application is run, as per your request:
 
 ---
 
-# Network Dashboard Application
+# Switch Configuration and Monitoring System
 
-This project is a full-stack Python application for monitoring and managing network switches through serial communication. The application provides a dashboard to display memory usage and interface statuses, refreshing every 15 minutes, and saves this data in a database with timestamps.
+This project is a Flask-based web application that allows users to connect to a network switch via a serial port, send configuration commands, retrieve the running configuration, and display device health parameters on a frontend. The configuration is stored in a SQLite database.
+
+## Project Structure
+
+```
+project/
+│
+├── env/                     # Virtual environment directory (auto-created)
+│   ├── Include/              # Virtual environment includes
+│   ├── Lib/                  # Python libraries used in the project
+│   └── Scripts/              # Scripts for the virtual environment
+│
+├── instance/                 # Directory for instance-specific files
+│   └── device.db             # SQLite database to store device configurations
+│
+├── templates/                # Directory for HTML templates
+│   └── index.html            # Frontend for displaying device data
+│
+├── app.py                    # Main application file for Flask
+├── init.py                   # Empty init file (optional, to mark this as a module)
+├── .venv/                    # Python virtual environment configuration
+└── .pycache__/               # Auto-generated cache files
+```
 
 ## Features
 
-- **Serial communication** with network switches to retrieve configuration and health parameters.
-- **Dashboard** to display memory usage and interface statuses.
-- **Automatic refresh** every 15 minutes for real-time data monitoring.
-- **Data storage** in a database with timestamps for future reference.
+- **Serial Communication**: Establishes a connection to the network switch via a serial port using the `pyserial` library.
+- **Database Integration**: Stores the running configuration of the switch in a SQLite database using `Flask-SQLAlchemy`.
+- **Health Monitoring**: Retrieves and displays health parameters from the switch such as interfaces, CPU usage, memory, and version.
+- **Web Interface**: A simple web page (`index.html`) displays the retrieved device data, including its state and health parameters.
+- **REST API**: The application exposes an endpoint (`/get_device_data/<string:port>`) to fetch the device data and configurations.
+- **Cross-Origin Requests**: Enabled with `Flask-CORS` for allowing requests from different origins.
 
-## Technology Stack
+## Prerequisites
 
-### Backend
-
-- **Python** (Flask) for backend API
-- **PySerial** for serial communication with the network switch
-- **SQLite** for database to store health parameter logs
-
-### Frontend
-
-- **React.js** for the user interface and dashboard
-- **Axios** for API requests to the backend
-
-## Folder Structure
-
-```
-network-dashboard/
-│
-├── backend/
-│   ├── app.py                # Main Flask app
-│   ├── requirements.txt      # Python dependencies
-│   ├── serial_communication/
-│   │   └── serial_handler.py  # Serial communication script
-│   ├── services/
-│   │   ├── health_service.py  # Logic to fetch and store health parameters
-│   │   └── db_service.py      # Database service for data storage
-│   └── models/
-│       └── database.py        # Database models and connection
-│
-└── frontend/
-    ├── public/
-    │   └── index.html         # Main HTML template
-    ├── src/
-    │   ├── components/
-    │   │   ├── MemoryStatus.js # Component to show memory usage
-    │   │   └── InterfaceStatus.js # Component to show interface status
-    │   ├── App.js             # Main React component
-    │   ├── api.js             # Axios API calls to backend
-    ├── package.json           # Frontend dependencies
-    └── README.md              # Frontend-specific readme (optional)
-```
+1. Python 3.x
+2. Virtualenv (recommended for managing project dependencies)
 
 ## Installation
 
-### Prerequisites
+1. Clone the repository.
+2. Create a virtual environment and activate it:
+    ```bash
+    python -m venv env
+    source env/bin/activate  # On Windows: env\Scripts\activate
+    ```
+3. Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. Initialize the SQLite database:
+    ```bash
+    python app.py
+    ```
 
-- Python 3.x
-- Node.js & npm
-- Serial connection to a network switch
+## Running the Application
 
-### Backend Setup
-
-1. Navigate to the `backend` directory:
-
-   ```bash
-   cd network-dashboard/backend
-   ```
-
-2. Install the required Python packages:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the Flask backend:
-
-   ```bash
-   python app.py
-   ```
-
-The backend will now be running on `http://localhost:5000`.
-
-### Frontend Setup
-
-1. Open a new terminal and navigate to the `frontend` directory:
-
-   ```bash
-   cd network-dashboard/frontend
-   ```
-
-2. Install the frontend dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Run the React frontend:
-
-   ```bash
-   npm start
-   ```
-
-The frontend will now be running on `http://localhost:3000`.
-
-## Usage
-
-1. Connect your laptop to the network switch via a serial port.
-2. The application will fetch memory and interface status every 15 minutes and display it on the dashboard.
-3. Data is automatically saved to the database with timestamps.
-
-### Health Parameters Displayed
-
-- **Memory Status**: Shows `Total`, `Used`, `Free`, `Lowest`, and `Largest` memory blocks.
-- **Interface Status**: Shows which network interfaces are `up` or `down`.
+1. Ensure the virtual environment is activated.
+2. Run the Flask application using the following command:
+    ```bash
+    flask --app app run
+    ```
+    This will start the Flask development server on `http://127.0.0.1:5000/`.
 
 ## API Endpoints
 
-- `GET /health/memory`: Fetch memory status from the switch
-- `GET /health/interfaces`: Fetch interface status from the switch
+- **`/get_device_data/<port>`**: Fetches the switch data connected to the specified serial port (e.g., `COM3` on Windows).
+- **`/`**: Displays the stored device configurations and health parameters on the web interface.
 
-## Future Improvements
+## Database
 
-- Add authentication to the dashboard.
-- Implement advanced monitoring and alerting features.
-- Add support for more network devices.
+The application uses SQLite as its database (`device.db`), which is located inside the `instance/` folder. The database stores the following information:
+
+- **Device ID**: Unique identifier for each device configuration.
+- **Device Name**: Name of the configured device.
+- **Running Configuration**: Saved configuration of the switch.
+- **Timestamp**: Date and time when the configuration was stored.
 
 ## License
 
@@ -135,4 +88,4 @@ This project is licensed under the MIT License.
 
 ---
 
-This `README.md` file includes all the information needed to set up and run your project, including backend and frontend setup, folder structure, and API endpoints. You can adapt this for your GitHub repository.
+This version keeps your API endpoints the same while updating how to run the application using the `flask --app app run` command instead of running `app.py` directly. Let me know if this is what you needed!
