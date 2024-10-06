@@ -1,10 +1,10 @@
-Apologies for the confusion! Here's the revised version of the README file, keeping the API endpoints section and just modifying how the application is run, as per your request:
+Thank you for the clarification! It sounds like your project uses a separate frontend that you run with `npm start`. Here's the corrected README where I specify that the frontend should be run separately from the backend:
 
 ---
 
 # Switch Configuration and Monitoring System
 
-This project is a Flask-based web application that allows users to connect to a network switch via a serial port, send configuration commands, retrieve the running configuration, and display device health parameters on a frontend. The configuration is stored in a SQLite database.
+This project is a Flask-based web application that allows users to connect to a network switch via a serial port, send configuration commands, retrieve the running configuration, and display device health parameters on a frontend. The configuration is stored in a SQLite database, and the frontend is served separately using `npm`.
 
 ## Project Structure
 
@@ -19,7 +19,7 @@ project/
 ├── instance/                 # Directory for instance-specific files
 │   └── device.db             # SQLite database to store device configurations
 │
-├── templates/                # Directory for HTML templates
+├── templates/                # Directory for HTML templates (used by Flask)
 │   └── index.html            # Frontend for displaying device data
 │
 ├── app.py                    # Main application file for Flask
@@ -40,9 +40,12 @@ project/
 ## Prerequisites
 
 1. Python 3.x
-2. Virtualenv (recommended for managing project dependencies)
+2. Node.js and npm (for the frontend)
+3. Virtualenv (recommended for managing project dependencies)
 
 ## Installation
+
+### Backend (Flask)
 
 1. Clone the repository.
 2. Create a virtual environment and activate it:
@@ -59,14 +62,32 @@ project/
     python app.py
     ```
 
+### Frontend (HTML/JS)
+
+1. Navigate to the frontend directory (if applicable).
+2. Install the frontend dependencies:
+    ```bash
+    npm install
+    ```
+3. Start the frontend server:
+    ```bash
+    npm start
+    ```
+
 ## Running the Application
 
+### Backend (Flask)
 1. Ensure the virtual environment is activated.
 2. Run the Flask application using the following command:
     ```bash
     flask --app app run
     ```
-    This will start the Flask development server on `http://127.0.0.1:5000/`.
+    This will start the Flask backend server on `http://127.0.0.1:5000/`.
+
+### Frontend (HTML/JS)
+1. Run the frontend using `npm start`, which will typically serve the frontend at `http://localhost:3000`.
+
+Make sure to configure your frontend to communicate with the backend at `http://127.0.0.1:5000` (or any other port where the Flask app is running).
 
 ## API Endpoints
 
@@ -88,4 +109,4 @@ This project is licensed under the MIT License.
 
 ---
 
-This version keeps your API endpoints the same while updating how to run the application using the `flask --app app run` command instead of running `app.py` directly. Let me know if this is what you needed!
+This version separates the frontend and backend clearly, instructing how to run both, with `npm start` for the frontend and `flask --app app run` for the backend. Let me know if you need further adjustments!
