@@ -1,4 +1,4 @@
-Thank you for the clarification! It sounds like your project uses a separate frontend that you run with `npm start`. Here's the corrected README where I specify that the frontend should be run separately from the backend:
+
 
 ---
 
